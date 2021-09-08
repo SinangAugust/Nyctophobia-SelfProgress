@@ -5,15 +5,12 @@ using UnityEngine;
 public class crouch : MonoBehaviour
 {
     private bool m_Peek = false;
-    /*private float m_OriginalHeight;
-    private float m_PeekHeight = 0.7f;*/
     private Transform m_Camera;
 
     public KeyCode peekKey = KeyCode.V;
 
     void Start()
     {
-        /*m_OriginalHeight = m_Camera.localPosition;*/
         m_Camera = this.gameObject.transform.GetChild(0);
         Debug.Log(m_Camera.localPosition);
     }

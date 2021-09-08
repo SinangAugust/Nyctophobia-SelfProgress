@@ -21,6 +21,7 @@ public class SanityStatus : MonoBehaviour
     bool noLight = false;
     bool sanityLoss = false;
     bool isBreathing = false;
+    bool isSpooky = true;
 
     void Start()
     {
@@ -43,8 +44,6 @@ public class SanityStatus : MonoBehaviour
 
         SanityConditions();
         SanityRegen();
-
-        Debug.Log(currentSanity);
     }
 
     void SanityConditions()
@@ -52,19 +51,18 @@ public class SanityStatus : MonoBehaviour
         if (currentSanity <= 70)
         {
             isBreathing = true;
-            StartCoroutine(BreathingSound());
-        }
-        else if (currentSanity <= 50)
-        {
-            /*The player will start hearing random spooky sounds*/
-        }
-        else if (currentSanity <= 30)
-        {
-            /*Player vision will start to get fuzzy*/
-        }
-        else if ( currentSanity <= 10)
-        {
-            /*The player will start seeing random entities at a random time*/
+            StartCoroutine(StartBreathingSound());
+
+            if (currentSanity <= 50)
+            {
+                isSpooky = true;
+                StartCoroutine(StartSpookySound());
+
+                if (currentSanity <= 30)
+                {
+                    /*Player vision will start to get fuzzy*/
+                }
+            }
         }
     }
 
@@ -106,9 +104,29 @@ public class SanityStatus : MonoBehaviour
         }
     }
 
-    IEnumerator BreathingSound()
+    IEnumerator StartBreathingSound()
     {
-        yield return new WaitForSeconds(Random.Range(10f, 20f));
-        audioBreathing.Play();
+        if (isBreathing == true){
+            yield return new WaitForSeconds(Random.Range(2f, 4f));
+            BreathingSound();
+            yield return new WaitForSeconds(8f);
+        }
+    }
+
+    void BreathingSound(){
+        audioBreathing.PlayDelayed(Random.Range(2f, 4f));
+    }
+
+    IEnumerator StartSpookySound()
+    {
+        if (isBreathing == true){
+            yield return new WaitForSeconds(Random.Range(3f, 5f));
+            SpookySound();
+            yield return new WaitForSeconds(10f);
+        }
+    }
+
+    void SpookySound(){
+        audioBreathing.PlayDelayed(Random.Range(3f, 5f));
     }
 }
