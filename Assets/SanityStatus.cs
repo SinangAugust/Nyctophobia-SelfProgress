@@ -5,23 +5,28 @@ using UnityEngine;
 public class SanityStatus : MonoBehaviour
 {
     public SanityBar sanityBar;
+    public GlitchEffect glitchEffect;
     public Transform lightSource;
     public Transform thePlayer;
     public AudioSource audioBreathing;
     public AudioSource audioSpooky;
-    public AudioClip test;
 
     public float maxSanity = 100;
     public float minSanity = 0;
     public float currentSanity;
 
-    public float sanityRegenRate = 0.6f;
+    public float sanityRegenRate = 0.3f;
     public float sanityLossRate = 0.4f;
+
+    float conditionOne = 70;
+    float conditionTwo = 50;
+    float conditionThree = 30;
+    float conditionFour = 10;
 
     bool noLight = false;
     bool sanityLoss = false;
     bool isBreathing = false;
-    bool isSpooky = true;
+    bool isSpooky = false;
 
     void Start()
     {
@@ -33,6 +38,9 @@ public class SanityStatus : MonoBehaviour
     {
         sanityBar.UpdateSanity(currentSanity);
 
+        SanityConditions();
+        SanityRegen();
+
         if (currentSanity >= maxSanity)
         {
             currentSanity = maxSanity;
@@ -40,29 +48,6 @@ public class SanityStatus : MonoBehaviour
         else if (currentSanity <= minSanity)
         {
             currentSanity = minSanity;
-        }
-
-        SanityConditions();
-        SanityRegen();
-    }
-
-    void SanityConditions()
-    {
-        if (currentSanity <= 70)
-        {
-            isBreathing = true;
-            StartCoroutine(StartBreathingSound());
-
-            if (currentSanity <= 50)
-            {
-                isSpooky = true;
-                StartCoroutine(StartSpookySound());
-
-                if (currentSanity <= 30)
-                {
-                    /*Player vision will start to get fuzzy*/
-                }
-            }
         }
     }
 
@@ -104,29 +89,43 @@ public class SanityStatus : MonoBehaviour
         }
     }
 
-    IEnumerator StartBreathingSound()
+    void SanityConditions()
     {
-        if (isBreathing == true){
-            yield return new WaitForSeconds(Random.Range(2f, 4f));
-            BreathingSound();
-            yield return new WaitForSeconds(8f);
+        if (conditionOne < currentSanity)
+        {
+            audioBreathing.Play();
+            // StartCoroutine(StartBreathingSound());
+        }
+        if (conditionTwo < currentSanity)
+        {
+            audioSpooky.Play();
+            // StartCoroutine(StartSpookySound());
+        }   
+        if (conditionThree < currentSanity)
+        {
+            // --Players will have their screens glitch which will make it harder for them to see.
+            // --Just add the already made glitch camera script.
+        }
+        if (conditionFour < currentSanity)
+        {
+            // --Player will start seeing random ghost in their vision.
+            // --Player will have AI attracted to them (I can't do this part because I do not have AI related tasks)
         }
     }
 
-    void BreathingSound(){
-        audioBreathing.PlayDelayed(Random.Range(2f, 4f));
+    IEnumerator StartBreathingSound()
+    {
+        yield return new WaitForSeconds(Random.Range(1f, 3f));
+        audioBreathing.Play();
+        yield return new WaitForSeconds(8f);
+        StartCoroutine(StartBreathingSound());
     }
 
     IEnumerator StartSpookySound()
     {
-        if (isBreathing == true){
-            yield return new WaitForSeconds(Random.Range(3f, 5f));
-            SpookySound();
-            yield return new WaitForSeconds(10f);
-        }
-    }
-
-    void SpookySound(){
-        audioBreathing.PlayDelayed(Random.Range(3f, 5f));
+        yield return new WaitForSeconds(Random.Range(1f, 3f));
+        audioSpooky.Play();
+        yield return new WaitForSeconds(8f);
+        StartCoroutine(StartSpookySound());
     }
 }
