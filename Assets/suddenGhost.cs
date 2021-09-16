@@ -35,11 +35,13 @@ public class suddenGhost : MonoBehaviour
 
             if (distance <= 1 && distance >= -1)
             {
+                // --This will activate the sudden ghost pop-up
                 ghostObj.SetActive(true);
                 isReady = true;
 
                 if (isReady == true)
                 {
+                    // --This is to set the sudden ghost to run into the player
                     ghost.SetDestination(thePlayer.position);
                 }
             }

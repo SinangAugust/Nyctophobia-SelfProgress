@@ -48,6 +48,7 @@ public class depthOfFieldController : MonoBehaviour
 
     void SetFocus()
     {
+        // --This will set the depth of field
         depthOfField.focusDistance.value = Mathf.Lerp(depthOfField.focusDistance.value, hitDistance, Time.deltaTime * focusSpeed);
     }
 

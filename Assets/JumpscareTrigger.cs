@@ -26,6 +26,7 @@ public class JumpscareTrigger : MonoBehaviour
 
     IEnumerator EndJump()
     {
+        // --This is the trigger for the close-up jumpscare
         yield return new WaitForSeconds(1);
         Scream.Play();
         ThePlayer.SetActive(false);

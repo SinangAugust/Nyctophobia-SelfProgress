@@ -25,6 +25,7 @@ public class ghostPatrol : MonoBehaviour
 
     private void Patrolling()
     {
+        // --This will set the AI's patrol state
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -38,6 +39,7 @@ public class ghostPatrol : MonoBehaviour
 
     private void SearchWalkPoint()
     {
+        // --This will set the area where the AI can patrol
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 

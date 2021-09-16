@@ -36,11 +36,12 @@ public class peek : MonoBehaviour
             m_IsPeeking = false;
         }
 
-        CheckLeaning();
+        CheckPeeking();
     }
 
-    void CheckLeaning()
+    void CheckPeeking()
     {
+        // --This is to set the camera angle sideways so the player can peek
         if (m_IsPeeking)
         {
             m_FPSController.SetRotateZ(m_Amount);

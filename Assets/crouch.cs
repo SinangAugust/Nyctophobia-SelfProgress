@@ -17,6 +17,7 @@ public class crouch : MonoBehaviour
 
     void Update()
     {
+        // --Basically use letter V to crouch
         if (Input.GetKey(peekKey))
         {
             m_Peek = true;

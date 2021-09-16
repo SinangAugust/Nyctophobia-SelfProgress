@@ -34,6 +34,7 @@ public class viewTrigger : MonoBehaviour
             isTriggered = true;
             if (isTriggered == true)
             {
+                // --This will increase the field of view
                 initialFOV += fovUpSpeed;
                 if (maxFOV <= initialFOV)
                 {
@@ -46,6 +47,7 @@ public class viewTrigger : MonoBehaviour
 
         else if (distance >= 12 && isReady == true)
         {
+            // --This will revert the field of view back to normal
             initialFOV -= fovDownSpeed;
             if (minFOV >= initialFOV)
             {

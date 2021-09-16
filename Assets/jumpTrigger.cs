@@ -18,6 +18,7 @@ public class jumpTrigger : MonoBehaviour
     {
         if (!isPlayed)
         {
+            // --This is to play the random jumpscare sfx
             audioSource.PlayOneShot(triggerSound, Volume);
             isPlayed = true;
         }

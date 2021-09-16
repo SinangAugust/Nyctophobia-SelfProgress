@@ -25,8 +25,6 @@ public class SanityStatus : MonoBehaviour
 
     bool noLight = false;
     bool sanityLoss = false;
-    bool isBreathing = false;
-    bool isSpooky = false;
 
     void Start()
     {
@@ -41,6 +39,7 @@ public class SanityStatus : MonoBehaviour
         SanityConditions();
         SanityRegen();
 
+        // --This is to set the default of the sanity value
         if (currentSanity >= maxSanity)
         {
             currentSanity = maxSanity;
@@ -53,6 +52,7 @@ public class SanityStatus : MonoBehaviour
 
     void SanityRegen()
     {
+        // --This is the condition to regenerate the sanity
         float distance = (thePlayer.transform.position - lightSource.transform.position).magnitude;
 
         if (distance <= 6)
@@ -79,6 +79,7 @@ public class SanityStatus : MonoBehaviour
 
     void SanityConsume()
     {
+        // --This is the condition to have sanity loss
         if (noLight == true && sanityLoss == true)
         {
             currentSanity -= sanityLossRate * Time.deltaTime;
@@ -91,15 +92,14 @@ public class SanityStatus : MonoBehaviour
 
     void SanityConditions()
     {
+        // --This is the aftereffects of every value of the current sanity the player has
         if (conditionOne < currentSanity)
         {
             audioBreathing.Play();
-            // StartCoroutine(StartBreathingSound());
         }
         if (conditionTwo < currentSanity)
         {
             audioSpooky.Play();
-            // StartCoroutine(StartSpookySound());
         }   
         if (conditionThree < currentSanity)
         {
@@ -111,21 +111,5 @@ public class SanityStatus : MonoBehaviour
             // --Player will start seeing random ghost in their vision.
             // --Player will have AI attracted to them (I can't do this part because I do not have AI related tasks)
         }
-    }
-
-    IEnumerator StartBreathingSound()
-    {
-        yield return new WaitForSeconds(Random.Range(1f, 3f));
-        audioBreathing.Play();
-        yield return new WaitForSeconds(8f);
-        StartCoroutine(StartBreathingSound());
-    }
-
-    IEnumerator StartSpookySound()
-    {
-        yield return new WaitForSeconds(Random.Range(1f, 3f));
-        audioSpooky.Play();
-        yield return new WaitForSeconds(8f);
-        StartCoroutine(StartSpookySound());
     }
 }
